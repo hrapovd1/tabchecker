@@ -1,2 +1,2 @@
 # tabchecker
-DB tables checker
+Check data in different db instances after migration.
