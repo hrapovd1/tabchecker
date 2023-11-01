@@ -13,6 +13,19 @@ import (
 
 var ErrNoConfig = errors.New("Config not provided")
 
+// Config struct for app configuration, must be in json:
+//
+//	{
+//		"left": "dsn",
+//		"right": "dsn",
+//		"table": {
+//			"name": "name",
+//			"fields": {
+//				"colonName1": "type",
+//				"colonName2": "type"
+//			}
+//		}
+//	}
 type Config struct {
 	Left  string `json:"left"`
 	Right string `json:"right"`
@@ -23,6 +36,8 @@ type Table struct {
 	Name string `json:"name"`
 }
 
+// NewConfig read cmd args and wait config path
+// from which it generates app config
 func NewConfig() (Config, error) {
 	config := Config{}
 	configPath, err := config.getConfig()
@@ -33,6 +48,8 @@ func NewConfig() (Config, error) {
 	if err != nil {
 		return config, err
 	}
+	defer configFile.Close()
+
 	configRaw, err := io.ReadAll(configFile)
 	if err != nil {
 		return config, err
