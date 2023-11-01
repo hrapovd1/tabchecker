@@ -1,10 +1,10 @@
 package main
 
 import (
-	"errors"
+	"fmt"
 	"log"
-	"os"
-	"path/filepath"
+
+	"github.com/hrapovd1/tabchecker/internal/config"
 )
 
 /*
@@ -25,20 +25,10 @@ import (
 4. check rows by index
 */
 
-var ErrNoConfig = errors.New("Config not provided")
-
 func main() {
-	config, err := getConfig()
+	config, err := config.NewConfig()
 	if err != nil {
 		log.Fatalln(err)
 	}
-}
-
-// return config path from args or error
-func getConfig() (string, error) {
-	args := os.Args
-	if len(args) < 2 {
-		return "", ErrNoConfig
-	}
-	return filepath.Abs(args[1])
+	fmt.Printf("config = %v\n", &config)
 }
