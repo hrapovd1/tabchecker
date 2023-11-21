@@ -15,21 +15,31 @@ var ErrNoConfig = errors.New("Config not provided")
 
 // Config struct for app configuration, must be in json:
 //
-//	{
-//		"left": "dsn",
-//		"right": "dsn",
-//		"table": {
-//			"name": "name",
-//			"fields": {
-//				"colonName1": "type",
-//				"colonName2": "type"
+//		{
+//			"left": {
+//	            "type": "type",
+//	            "dsn": "dsn"
+//	        },
+//			"right": {
+//	            "type": "type",
+//	            "dsn": "dsn"
+//	        },
+//			"table": {
+//				"name": "name",
+//				"fields": {
+//					"colonName1": "type",
+//					"colonName2": "type"
+//				}
 //			}
 //		}
-//	}
+type dsnConfig struct {
+	Type string `json:"type"`
+	DSN  string `json:"dsn"`
+}
 type Config struct {
-	Left  string `json:"left"`
-	Right string `json:"right"`
-	Table Table  `json:"table,omitempty"`
+	Left  dsnConfig `json:"left"`
+	Right dsnConfig `json:"right"`
+	Table Table     `json:"table,omitempty"`
 }
 
 type Table struct {
