@@ -1,0 +1,30 @@
+services:
+  mysql:
+    image: mysql:latest
+    command: "--default-authentication-plugin=caching_sha2_password"
+    env_file: .mysql.env
+    network_mode: host
+    expose:
+      - 3306
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+  postgres:
+    image: postgres:latest
+    env_file: .psql.env
+    network_mode: host
+    expose:
+      - 5432
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
